@@ -10,15 +10,15 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: () => import('@/views/LoginView.vue'),
-      meta: { requiresGuest: true }
+      meta: { requiresGuest: true },
     },
     {
       path: '/register',
       name: 'register',
       component: () => import('@/views/RegisterView.vue'),
-      meta: { requiresGuest: true }
+      meta: { requiresGuest: true },
     },
-    
+
     // 主应用路由
     {
       path: '/',
@@ -28,23 +28,29 @@ const router = createRouter({
         {
           path: '',
           name: 'dashboard',
-          component: () => import('@/views/DashboardView.vue')
+          component: () => import('@/views/DashboardView.vue'),
         },
         {
           path: '/users',
           name: 'users',
           component: () => import('@/views/UserManagement.vue'),
-          meta: { requiresAuth: true, title: '用户管理' }
-        }
-      ]
+          meta: { requiresAuth: true, title: '用户管理' },
+        },
+        {
+          path: '/test-tool',
+          name: 'test-tool',
+          component: () => import('@/views/TestView.vue'),
+          meta: { requiresAuth: true, title: '测试工具' },
+        },
+      ],
     },
-    
+
     // 404页面
     {
       path: '/:pathMatch(.*)*',
       name: 'not-found',
-      component: () => import('@/views/NotFoundView.vue')
-    }
+      component: () => import('@/views/NotFoundView.vue'),
+    },
   ],
 })
 

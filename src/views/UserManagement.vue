@@ -25,7 +25,7 @@
             style="width: 200px"
           />
         </el-form-item>
-        
+
         <el-form-item label="状态">
           <el-select
             v-model="searchForm.status"
@@ -38,7 +38,7 @@
             <el-option label="禁用" value="DISABLED" />
           </el-select>
         </el-form-item>
-        
+
         <el-form-item label="角色">
           <el-select
             v-model="searchForm.role"
@@ -51,7 +51,7 @@
             <el-option label="访客" value="GUEST" />
           </el-select>
         </el-form-item>
-        
+
         <el-form-item>
           <el-button type="primary" @click="handleSearch">
             <el-icon><Search /></el-icon>
@@ -75,23 +75,23 @@
         border
       >
         <el-table-column prop="id" label="ID" width="80" />
-        
+
         <el-table-column prop="username" label="用户名" width="120" />
-        
+
         <el-table-column prop="email" label="邮箱" width="200" />
-        
+
         <el-table-column prop="realName" label="真实姓名" width="120">
           <template #default="{ row }">
             {{ row.realName || '-' }}
           </template>
         </el-table-column>
-        
+
         <el-table-column prop="phone" label="手机号" width="130">
           <template #default="{ row }">
             {{ row.phone || '-' }}
           </template>
         </el-table-column>
-        
+
         <el-table-column prop="status" label="状态" width="100">
           <template #default="{ row }">
             <el-tag
@@ -102,7 +102,7 @@
             </el-tag>
           </template>
         </el-table-column>
-        
+
         <el-table-column prop="role" label="角色" width="100">
           <template #default="{ row }">
             <el-tag
@@ -113,14 +113,14 @@
             </el-tag>
           </template>
         </el-table-column>
-        
+
         <el-table-column prop="createTime" label="创建时间" width="180">
           <template #default="{ row }">
             {{ formatDate(row.createTime) }}
           </template>
         </el-table-column>
-        
-        <el-table-column label="操作" width="200" fixed="right">
+
+        <el-table-column label="操作" width="230" fixed="right">
           <template #default="{ row }">
             <el-button
               type="primary"
@@ -130,7 +130,7 @@
               <el-icon><EditPen /></el-icon>
               编辑
             </el-button>
-            
+
             <el-button
               :type="row.status === 'ACTIVE' ? 'warning' : 'success'"
               size="small"
@@ -140,7 +140,7 @@
               <el-icon v-else><Unlock /></el-icon>
               {{ row.status === 'ACTIVE' ? '禁用' : '启用' }}
             </el-button>
-            
+
             <el-popconfirm
               title="确定要删除这个用户吗？"
               @confirm="handleDelete(row.id)"
@@ -158,7 +158,7 @@
           </template>
         </el-table-column>
       </el-table>
-      
+
       <!-- 分页 -->
       <div class="pagination-section">
         <el-pagination
@@ -167,6 +167,8 @@
           :page-sizes="[10, 20, 50, 100]"
           :total="userStore.pagination.total"
           layout="total, sizes, prev, pager, next, jumper"
+          prev-text="上一页"
+          next-text="下一页"
           @size-change="handleSearch"
           @current-change="handleSearch"
         />
@@ -193,28 +195,28 @@
             placeholder="请输入用户名"
           />
         </el-form-item>
-        
+
         <el-form-item label="邮箱" prop="email">
           <el-input
             v-model="editForm.email"
             placeholder="请输入邮箱"
           />
         </el-form-item>
-        
+
         <el-form-item label="真实姓名">
           <el-input
             v-model="editForm.realName"
             placeholder="请输入真实姓名"
           />
         </el-form-item>
-        
+
         <el-form-item label="手机号">
           <el-input
             v-model="editForm.phone"
             placeholder="请输入手机号"
           />
         </el-form-item>
-        
+
         <el-form-item label="角色" prop="role">
           <el-select v-model="editForm.role" style="width: 100%">
             <el-option label="管理员" value="ADMIN" />
@@ -222,7 +224,7 @@
             <el-option label="访客" value="GUEST" />
           </el-select>
         </el-form-item>
-        
+
         <el-form-item label="状态" prop="status">
           <el-select v-model="editForm.status" style="width: 100%">
             <el-option label="激活" value="ACTIVE" />
@@ -231,7 +233,7 @@
           </el-select>
         </el-form-item>
       </el-form>
-      
+
       <template #footer>
         <div class="dialog-footer">
           <el-button @click="editDialogVisible = false">取消</el-button>
@@ -250,7 +252,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { ElForm, ElMessage } from 'element-plus'
+import { ElForm } from 'element-plus'
 import { Search, Refresh, Plus, EditPen, Delete, Lock, Unlock } from '@element-plus/icons-vue'
 import { useUserStore } from '@/stores/user'
 import type { User, UserQuery, UserStatus, UserRole } from '@/types/api'
@@ -340,10 +342,10 @@ const handleEdit = (user: User) => {
 // 保存编辑
 const handleSaveEdit = async () => {
   if (!editFormRef.value) return
-  
+
   try {
     await editFormRef.value.validate()
-    
+
     if (isEdit.value && editForm.id) {
       const success = await userStore.updateUser(editForm.id, editForm)
       if (success) {
@@ -512,34 +514,34 @@ onMounted(() => {
     text-align: center;
     padding: 20px;
   }
-  
+
   .header-left h2 {
     font-size: 24px;
   }
-  
+
   .header-left p {
     font-size: 14px;
   }
-  
+
   .search-form {
     flex-direction: column;
     gap: 16px;
   }
-  
+
   .search-form .el-form-item {
     margin-right: 0;
     margin-bottom: 16px;
   }
-  
+
   .search-form .el-input,
   .search-form .el-select {
     width: 100% !important;
   }
-  
+
   .table-section {
     overflow-x: auto;
   }
-  
+
   .el-table {
     min-width: 800px;
   }
@@ -549,15 +551,15 @@ onMounted(() => {
   .page-header {
     padding: 16px;
   }
-  
+
   .header-left h2 {
     font-size: 20px;
   }
-  
+
   .search-section {
     padding: 16px;
   }
-  
+
   .table-section {
     padding: 16px;
   }

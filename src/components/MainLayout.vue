@@ -2,7 +2,7 @@
   <div class="main-layout">
     <!-- 移动端遮罩层 -->
     <div v-if="isMobile && !isCollapse" class="mobile-overlay" @click="closeMobileSidebar"></div>
-    
+
     <!-- 顶部导航栏 -->
     <el-header class="header">
       <!-- 移动端菜单按钮 -->
@@ -12,7 +12,7 @@
       <div class="header-left">
         <h3 class="logo">佑珈测试管理系统</h3>
       </div>
-      
+
       <div class="header-right">
         <!-- 用户信息下拉菜单 -->
         <el-dropdown @command="handleCommand">
@@ -23,7 +23,7 @@
             <span class="username">{{ authStore.user?.username }}</span>
             <el-icon class="arrow-down"><ArrowDown /></el-icon>
           </div>
-          
+
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item command="profile">
@@ -47,22 +47,17 @@
     <el-container class="main-container">
       <!-- 侧边栏 -->
       <el-aside :width="sidebarWidth" class="sidebar">
-        <el-menu
-          :default-active="activeMenu"
-          class="sidebar-menu"
-          router
-          :collapse="isCollapse"
-        >
+        <el-menu :default-active="activeMenu" class="sidebar-menu" router :collapse="isCollapse">
           <el-menu-item index="/">
             <el-icon><HomeFilled /></el-icon>
             <template #title>仪表板</template>
           </el-menu-item>
-          
+
           <el-menu-item index="/users">
             <el-icon><User /></el-icon>
             <template #title>用户管理</template>
           </el-menu-item>
-          
+
           <el-sub-menu index="projects">
             <template #title>
               <el-icon><Folder /></el-icon>
@@ -71,7 +66,7 @@
             <el-menu-item index="/projects">项目列表</el-menu-item>
             <el-menu-item index="/projects/create">创建项目</el-menu-item>
           </el-sub-menu>
-          
+
           <el-sub-menu index="testing">
             <template #title>
               <el-icon><DocumentChecked /></el-icon>
@@ -81,8 +76,13 @@
             <el-menu-item index="/test-modules">测试模块</el-menu-item>
             <el-menu-item index="/test-reports">测试报告</el-menu-item>
           </el-sub-menu>
+
+          <el-menu-item index="/test-tool">
+            <el-icon><Setting /></el-icon>
+            <template #title>测试工具</template>
+          </el-menu-item>
         </el-menu>
-        
+
         <!-- 侧边栏收缩按钮 -->
         <div class="sidebar-toggle" @click="toggleSidebar">
           <el-icon>
@@ -102,7 +102,7 @@
               {{ getRouteTitle(currentRouteName) }}
             </el-breadcrumb-item>
           </el-breadcrumb>
-          
+
           <!-- 页面内容 -->
           <div class="page-content">
             <router-view />
@@ -116,17 +116,17 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { 
-  ArrowDown, 
-  User, 
-  Setting, 
-  SwitchButton, 
+import {
+  ArrowDown,
+  User,
+  Setting,
+  SwitchButton,
   HomeFilled,
   Folder,
   DocumentChecked,
   Fold,
   Expand,
-  Menu
+  Menu,
 } from '@element-plus/icons-vue'
 import { useAuthStore } from '@/stores/auth'
 import { ElMessage, ElMessageBox } from 'element-plus'
@@ -184,12 +184,13 @@ onUnmounted(() => {
 // 获取路由标题
 const getRouteTitle = (routeName: string) => {
   const titleMap: Record<string, string> = {
-    'dashboard': '仪表板',
-    'users': '用户管理',
-    'projects': '项目管理',
+    dashboard: '仪表板',
+    users: '用户管理',
+    projects: '项目管理',
     'test-cases': '测试用例',
     'test-modules': '测试模块',
-    'test-reports': '测试报告'
+    'test-reports': '测试报告',
+    'test-tool': '测试工具',
   }
   return titleMap[routeName] || '未知页面'
 }
@@ -200,19 +201,19 @@ const handleCommand = async (command: string) => {
     case 'profile':
       ElMessage.info('个人资料功能开发中...')
       break
-      
+
     case 'settings':
       ElMessage.info('系统设置功能开发中...')
       break
-      
+
     case 'logout':
       try {
         await ElMessageBox.confirm('确定要退出登录吗？', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
-          type: 'warning'
+          type: 'warning',
         })
-        
+
         authStore.logout()
         router.push('/login')
       } catch {
@@ -340,6 +341,7 @@ const handleCommand = async (command: string) => {
   justify-content: center;
   cursor: pointer;
   transition: all 0.3s;
+  font-size: 18px;
 }
 
 .sidebar-toggle:hover {
@@ -371,12 +373,10 @@ const handleCommand = async (command: string) => {
   min-height: calc(100vh - 160px);
 }
 
-/* 响应式设计 */
 @media (max-width: 768px) {
   .mobile-overlay {
     display: block;
   }
-  
   .sidebar {
     position: fixed;
     top: 60px;
@@ -386,57 +386,30 @@ const handleCommand = async (command: string) => {
     box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
     transform: translateX(-100%);
   }
-  
   .sidebar:not(.collapsed) {
     transform: translateX(0);
   }
-  
   .header {
     padding: 0 16px;
   }
-  
   .header-left {
     display: flex;
     align-items: center;
   }
-  
   .header-left .logo {
     font-size: 16px;
   }
-  
   .username {
     display: none;
   }
-  
   .main-content {
     margin-left: 0 !important;
   }
-  
   .content-wrapper {
     padding: 16px;
   }
-  
   .sidebar-menu {
     height: calc(100vh - 140px);
-  }
-}
-
-@media (max-width: 480px) {
-  .header {
-    padding: 0 12px;
-  }
-  
-  .header-left .logo {
-    font-size: 14px;
-  }
-  
-  .content-wrapper {
-    padding: 12px;
-  }
-  
-  .breadcrumb {
-    padding: 8px 12px;
-    margin-bottom: 16px;
   }
 }
 </style>

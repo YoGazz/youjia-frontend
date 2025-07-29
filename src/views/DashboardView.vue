@@ -64,23 +64,23 @@
             <h3>快速操作</h3>
           </div>
         </template>
-        
+
         <div class="action-grid">
           <div class="action-item" @click="navigateTo('/users')">
             <el-icon class="action-icon"><User /></el-icon>
             <span>用户管理</span>
           </div>
-          
+
           <div class="action-item" @click="showComingSoon">
             <el-icon class="action-icon"><Folder /></el-icon>
             <span>创建项目</span>
           </div>
-          
+
           <div class="action-item" @click="showComingSoon">
             <el-icon class="action-icon"><DocumentAdd /></el-icon>
             <span>新建测试</span>
           </div>
-          
+
           <div class="action-item" @click="showComingSoon">
             <el-icon class="action-icon"><View /></el-icon>
             <span>查看报告</span>
@@ -97,18 +97,20 @@
             <h3>最近活动</h3>
           </div>
         </template>
-        
+
         <div class="activity-list">
           <div class="activity-item">
             <div class="activity-icon">
               <el-icon><User /></el-icon>
             </div>
             <div class="activity-content">
-              <p><strong>{{ authStore.user?.username }}</strong> 登录了系统</p>
+              <p>
+                <strong>{{ authStore.user?.username }}</strong> 登录了系统
+              </p>
               <span class="activity-time">刚刚</span>
             </div>
           </div>
-          
+
           <div class="empty-state">
             <el-icon class="empty-icon"><DocumentRemove /></el-icon>
             <p>暂无更多活动记录</p>
@@ -122,14 +124,14 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { 
-  User, 
-  Folder, 
-  DocumentChecked, 
+import {
+  User,
+  Folder,
+  DocumentChecked,
   TrendCharts,
   DocumentAdd,
   View,
-  DocumentRemove
+  DocumentRemove,
 } from '@element-plus/icons-vue'
 import { useAuthStore } from '@/stores/auth'
 import { useUserStore } from '@/stores/user'
@@ -145,7 +147,7 @@ const currentDate = computed(() => {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
-    weekday: 'long'
+    weekday: 'long',
   })
 })
 
@@ -202,7 +204,9 @@ onMounted(async () => {
 }
 
 .stat-card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .stat-card:hover {
@@ -392,58 +396,58 @@ onMounted(async () => {
   .dashboard {
     padding: 0;
   }
-  
+
   .welcome-section {
     padding: 32px 24px;
     margin-bottom: 24px;
   }
-  
+
   .welcome-section h2 {
     font-size: 24px;
   }
-  
+
   .welcome-section p {
     font-size: 15px;
   }
-  
+
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
     margin-bottom: 24px;
   }
-  
+
   .stat-content {
     padding: 8px 0;
   }
-  
+
   .stat-icon {
     width: 50px;
     height: 50px;
     margin-right: 16px;
     font-size: 20px;
   }
-  
+
   .stat-info h3 {
     font-size: 28px;
   }
-  
+
   .action-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
-  
+
   .action-item {
     padding: 24px 16px;
   }
-  
+
   .action-icon {
     font-size: 28px;
   }
-  
+
   .quick-actions {
     margin-bottom: 24px;
   }
-  
+
   .recent-activity {
     margin-bottom: 24px;
   }
@@ -453,52 +457,52 @@ onMounted(async () => {
   .welcome-section {
     padding: 24px 20px;
   }
-  
+
   .welcome-section h2 {
     font-size: 22px;
   }
-  
+
   .stats-grid {
     grid-template-columns: 1fr;
     gap: 12px;
   }
-  
+
   .stat-card {
     margin: 0;
   }
-  
+
   .stat-content {
     padding: 12px;
   }
-  
+
   .stat-icon {
     width: 48px;
     height: 48px;
     margin-right: 12px;
     font-size: 18px;
   }
-  
+
   .stat-info h3 {
     font-size: 24px;
   }
-  
+
   .action-grid {
     grid-template-columns: 1fr;
     gap: 12px;
   }
-  
+
   .action-item {
     padding: 20px 16px;
   }
-  
+
   .action-icon {
     font-size: 24px;
   }
-  
+
   .activity-item {
     padding: 12px 0;
   }
-  
+
   .activity-icon {
     width: 36px;
     height: 36px;
@@ -510,15 +514,15 @@ onMounted(async () => {
   .welcome-section {
     padding: 20px 16px;
   }
-  
+
   .welcome-section h2 {
     font-size: 20px;
   }
-  
+
   .stats-grid {
     gap: 10px;
   }
-  
+
   .action-grid {
     gap: 10px;
   }

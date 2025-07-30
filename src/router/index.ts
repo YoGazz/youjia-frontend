@@ -10,13 +10,15 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: () => import('@/views/LoginView.vue'),
-      meta: { requiresGuest: true },
+      // 设置路由元信息
+      meta: { requiresGuest: true, title: '登录' },
     },
     {
       path: '/register',
       name: 'register',
       component: () => import('@/views/RegisterView.vue'),
-      meta: { requiresGuest: true },
+      // 设置路由元信息
+      meta: { requiresGuest: true, title: '注册' },
     },
 
     // 主应用路由
@@ -29,6 +31,8 @@ const router = createRouter({
           path: '',
           name: 'dashboard',
           component: () => import('@/views/DashboardView.vue'),
+          // 设置路由元信息
+          meta: { title: '仪表板' },
         },
         {
           path: '/users',
@@ -50,6 +54,7 @@ const router = createRouter({
       path: '/:pathMatch(.*)*',
       name: 'not-found',
       component: () => import('@/views/NotFoundView.vue'),
+      meta: { title: '页面未找到' },
     },
   ],
 })
@@ -72,6 +77,19 @@ router.beforeEach((to, from, next) => {
   }
 
   next()
+})
+
+// 路由后置守卫 - 设置页面标题
+router.afterEach((to) => {
+  const baseTitle = 'TestPro - 专业测试管理平台'
+  const pageTitle = to.meta.title as string
+
+  // 如果存在页面标题，则拼接
+  if (pageTitle) {
+    document.title = `${pageTitle} - TestPro`
+  } else {
+    document.title = baseTitle
+  }
 })
 
 export default router

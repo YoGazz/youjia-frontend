@@ -81,6 +81,12 @@
             <el-icon><Setting /></el-icon>
             <template #title>测试工具</template>
           </el-menu-item>
+
+          <!-- 关于我们 -->
+          <el-menu-item index="/about">
+            <el-icon><InfoFilled /></el-icon>
+            <template #title>关于我们</template>
+          </el-menu-item>
         </el-menu>
 
         <!-- 侧边栏收缩按钮 -->
@@ -126,7 +132,7 @@ import {
   DocumentChecked,
   Fold,
   Expand,
-  Menu,
+  Menu, InfoFilled
 } from '@element-plus/icons-vue'
 import { useAuthStore } from '@/stores/auth'
 import { ElMessage, ElMessageBox } from 'element-plus'
@@ -181,8 +187,14 @@ onUnmounted(() => {
   window.removeEventListener('resize', checkMobile)
 })
 
-// 获取路由标题
+// 获取路由标题 - 优先从路由 meta 中获取
 const getRouteTitle = (routeName: string) => {
+  // 首先尝试从当前路由的 meta 信息中获取标题
+  if (route.meta?.title) {
+    return route.meta.title as string
+  }
+
+  // 如果 meta 中没有标题，则使用备用映射
   const titleMap: Record<string, string> = {
     dashboard: '仪表板',
     users: '用户管理',
@@ -191,6 +203,7 @@ const getRouteTitle = (routeName: string) => {
     'test-modules': '测试模块',
     'test-reports': '测试报告',
     'test-tool': '测试工具',
+    about: '关于我们',
   }
   return titleMap[routeName] || '未知页面'
 }

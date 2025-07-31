@@ -10,7 +10,7 @@
           <h1>TestPro</h1>
         </div>
         <div class="brand-description">
-          <h2>欢迎使用 TestPro</h2>
+          <h2>欢迎登录 TestPro</h2>
           <p>简单、高效、专业</p>
           <div class="geometric-shapes">
             <div class="shape shape-1"></div>
@@ -78,6 +78,10 @@
           >
             {{ authStore.isLoading ? '登录中...' : '登录' }}
           </el-button>
+
+          <div class="login-tip">
+            <p>测试账号 admin:12345678</p>
+          </div>
 
           <div class="divider">
             <span>或</span>
@@ -600,6 +604,13 @@ if (authStore.isAuthenticated()) {
   .login-btn {
     height: 44px;
     font-size: 15px;
+  }
+
+  .login-tip {
+    text-align: center;
+    margin-top: 16px;
+    color: #666;
+    font-size: 14px;
   }
 }
 </style>
